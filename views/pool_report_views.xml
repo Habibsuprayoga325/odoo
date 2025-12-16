@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Financial Report Tree View -->
+    <record id="view_pool_financial_report_tree" model="ir.ui.view">
+        <field name="name">pool.financial.report.tree</field>
+        <field name="model">pool.financial.report</field>
+        <field name="arch" type="xml">
+            <tree string="Financial Reports">
+                <field name="name"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="cleaning_count"/>
+                <field name="total_income" sum="Total Income"/>
+                <field name="paid_income" sum="Paid"/>
+                <field name="unpaid_income" sum="Unpaid"/>
+                <field name="total_expenses" sum="Expenses"/>
+                <field name="balance" sum="Balance"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Financial Report Form View -->
+    <record id="view_pool_financial_report_form" model="ir.ui.view">
+        <field name="name">pool.financial.report.form</field>
+        <field name="model">pool.financial.report</field>
+        <field name="arch" type="xml">
+            <form string="Financial Report">
+                <header>
+                    <button name="action_view_cleanings" 
+                            type="object" 
+                            string="View Cleanings" 
+                            class="oe_highlight"
+                            invisible="cleaning_count == 0"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_cleanings" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-list">
+                            <field name="cleaning_count" widget="statinfo" string="Cleanings"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                        </group>
+                    </group>
+                    <group string="Income Summary">
+                        <group>
+                            <field name="total_income" widget="monetary"/>
+                            <field name="paid_income" widget="monetary"/>
+                            <field name="unpaid_income" widget="monetary"/>
+                        </group>
+                        <group>
+                            <field name="total_expenses" widget="monetary"/>
+                            <field name="balance" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Details">
+                            <field name="cleaning_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="customer_id"/>
+                                    <field name="scheduled_date"/>
+                                    <field name="state"/>
+                                    <field name="payment_status"/>
+                                    <field name="total_cost" sum="Total"/>
+                                    <field name="paid_amount" sum="Paid"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Financial Report Action -->
+    <record id="action_pool_financial_report" model="ir.actions.act_window">
+        <field name="name">Financial Reports</field>
+        <field name="res_model">pool.financial.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first financial report!
+            </p>
+            <p>
+                Generate financial reports by date range to analyze income and expenses.
+            </p>
+        </field>
+    </record>
+
+    <!-- Cleaning Report Pivot View -->
+    <record id="view_pool_cleaning_report_pivot" model="ir.ui.view">
+        <field name="name">pool.cleaning.report.pivot</field>
+        <field name="model">pool.cleaning.report</field>
+        <field name="arch" type="xml">
+            <pivot string="Cleaning Analysis">
+                <field name="scheduled_date" type="row" interval="month"/>
+                <field name="service_type" type="col"/>
+                <field name="total_cost" type="measure"/>
+                <field name="duration" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Cleaning Report Graph View -->
+    <record id="view_pool_cleaning_report_graph" model="ir.ui.view">
+        <field name="name">pool.cleaning.report.graph</field>
+        <field name="model">pool.cleaning.report</field>
+        <field name="arch" type="xml">
+            <graph string="Cleaning Analysis" type="bar">
+                <field name="scheduled_date" interval="month"/>
+                <field name="total_cost" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <!-- Cleaning Report Action -->
+    <record id="action_pool_cleaning_report" model="ir.actions.act_window">
+        <field name="name">Cleaning Analysis</field>
+        <field name="res_model">pool.cleaning.report</field>
+        <field name="view_mode">pivot,graph</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

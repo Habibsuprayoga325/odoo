@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customer Tree View -->
+    <record id="view_pool_customer_tree" model="ir.ui.view">
+        <field name="name">pool.customer.tree</field>
+        <field name="model">pool.customer</field>
+        <field name="arch" type="xml">
+            <tree string="Customers">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="service_type" decoration-info="service_type == 'economy'" 
+                       decoration-success="service_type == 'business'" 
+                       decoration-danger="service_type == 'exclusive'"/>
+                <field name="pool_volume" sum="Total Volume"/>
+                <field name="service_price" sum="Total Price"/>
+                <field name="cleaning_count"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Customer Form View -->
+    <record id="view_pool_customer_form" model="ir.ui.view">
+        <field name="name">pool.customer.form</field>
+        <field name="model">pool.customer</field>
+        <field name="arch" type="xml">
+            <form string="Customer">
+                <header>
+                    <button name="action_view_cleanings" 
+                            type="object" 
+                            class="oe_highlight" 
+                            string="View Cleanings"
+                            invisible="cleaning_count == 0"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_cleanings" 
+                                type="object" 
+                                class="oe_stat_button" 
+                                icon="fa-calendar-check-o">
+                            <field name="cleaning_count" widget="statinfo" string="Cleanings"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group string="Customer Information">
+                            <field name="code" readonly="1"/>
+                            <field name="name"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                        <group string="Service Information">
+                            <field name="service_type" widget="radio"/>
+                            <field name="service_price" widget="monetary"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group string="Address">
+                        <field name="address" nolabel="1" placeholder="Full address..."/>
+                    </group>
+                    <group string="Pool Dimensions">
+                        <group>
+                            <field name="pool_length" string="Length (m)"/>
+                            <field name="pool_width" string="Width (m)"/>
+                        </group>
+                        <group>
+                            <field name="pool_depth" string="Depth (m)"/>
+                            <field name="pool_volume" string="Volume (m³)" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes">
+                            <field name="notes" placeholder="Additional notes..."/>
+                        </page>
+                        <page string="Cleaning History" invisible="cleaning_count == 0">
+                            <field name="cleaning_ids" readonly="1">
+                                <tree decoration-muted="state in ['cancelled','postponed']" 
+                                      decoration-success="state == 'completed'">
+                                    <field name="name"/>
+                                    <field name="scheduled_date"/>
+                                    <field name="cleaning_type"/>
+                                    <field name="state" widget="badge" 
+                                           decoration-info="state in ['draft','scheduled']"
+                                           decoration-warning="state == 'in_progress'"
+                                           decoration-success="state == 'completed'"/>
+                                    <field name="payment_status" widget="badge"
+                                           decoration-danger="payment_status == 'unpaid'"
+                                           decoration-warning="payment_status == 'partial'"
+                                           decoration-success="payment_status == 'paid'"/>
+                                    <field name="total_cost" sum="Total"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Customer Search View -->
+    <record id="view_pool_customer_search" model="ir.ui.view">
+        <field name="name">pool.customer.search</field>
+        <field name="model">pool.customer</field>
+        <field name="arch" type="xml">
+            <search string="Search Customers">
+                <field name="name" string="Customer" 
+                       filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="service_type"/>
+                <separator/>
+                <filter string="Economy" name="filter_economy" 
+                        domain="[('service_type', '=', 'economy')]"/>
+                <filter string="Business" name="filter_business" 
+                        domain="[('service_type', '=', 'business')]"/>
+                <filter string="Exclusive" name="filter_exclusive" 
+                        domain="[('service_type', '=', 'exclusive')]"/>
+                <separator/>
+                <filter string="Active" name="filter_active" 
+                        domain="[('active', '=', True)]"/>
+                <filter string="Archived" name="filter_archived" 
+                        domain="[('active', '=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Service Type" name="group_service_type" 
+                            context="{'group_by': 'service_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Customer Action -->
+    <record id="action_pool_customer" model="ir.actions.act_window">
+        <field name="name">Pool Customers</field>
+        <field name="res_model">pool.customer</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_pool_customer_search"/>
+        <field name="context">{'search_default_filter_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first customer!
+            </p>
+            <p>
+                Add customer information including pool dimensions and service type.
+            </p>
+        </field>
+    </record>
+
+</odoo>

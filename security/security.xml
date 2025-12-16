@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Security Groups -->
+    <record id="module_category_hudson" model="ir.module.category">
+        <field name="name">Hudson Management</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- Regular User -->
+    <record id="group_hudson_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="module_category_hudson"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+    </record>
+
+    <!-- Member -->
+    <record id="group_hudson_member" model="res.groups">
+        <field name="name">Member</field>
+        <field name="category_id" ref="module_category_hudson"/>
+        <field name="implied_ids" eval="[(4, ref('group_hudson_user'))]"/>
+    </record>
+
+    <!-- Division Admin -->
+    <record id="group_hudson_admin" model="res.groups">
+        <field name="name">Division Admin</field>
+        <field name="category_id" ref="module_category_hudson"/>
+        <field name="implied_ids" eval="[(4, ref('group_hudson_member'))]"/>
+    </record>
+
+    <!-- Record Rules -->
+    
+    <!-- Division Admin can access their divisions -->
+    <record id="division_admin_rule" model="ir.rule">
+        <field name="name">Division Admin: Own Divisions</field>
+        <field name="model_id" ref="model_hudson_division"/>
+        <field name="groups" eval="[(4, ref('group_hudson_admin'))]"/>
+        <field name="domain_force">[('admin_ids', 'in', [user.id])]</field>
+    </record>
+
+    <!-- Admin can manage customers -->
+    <record id="customer_admin_rule" model="ir.rule">
+        <field name="name">Admin: All Customers</field>
+        <field name="model_id" ref="model_pool_customer"/>
+        <field name="groups" eval="[(4, ref('group_hudson_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <!-- Admin can manage cleanings -->
+    <record id="cleaning_admin_rule" model="ir.rule">
+        <field name="name">Admin: All Cleanings</field>
+        <field name="model_id" ref="model_pool_cleaning"/>
+        <field name="groups" eval="[(4, ref('group_hudson_admin'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+</odoo>

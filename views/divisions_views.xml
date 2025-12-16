@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Division Tree View -->
+    <record id="view_hudson_division_tree" model="ir.ui.view">
+        <field name="name">hudson.division.tree</field>
+        <field name="model">hudson.division</field>
+        <field name="arch" type="xml">
+            <tree string="Divisions">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="customer_count"/>
+                <field name="active_cleaning_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Division Form View -->
+    <record id="view_hudson_division_form" model="ir.ui.view">
+        <field name="name">hudson.division.form</field>
+        <field name="model">hudson.division</field>
+        <field name="arch" type="xml">
+            <form string="Division">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_pool_customer)d" 
+                                type="action" 
+                                class="oe_stat_button" 
+                                icon="fa-users"
+                                invisible="code != 'pool'">
+                            <field name="customer_count" widget="statinfo" string="Customers"/>
+                        </button>
+                        <button name="%(action_pool_cleaning)d" 
+                                type="action" 
+                                class="oe_stat_button" 
+                                icon="fa-tasks"
+                                invisible="code != 'pool'">
+                            <field name="active_cleaning_count" widget="statinfo" string="Active"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="sequence"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Enter division description..."/>
+                        </page>
+                        <page string="Admins">
+                            <field name="admin_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="login"/>
+                                    <field name="user_type"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Division Kanban View -->
+    <record id="view_hudson_division_kanban" model="ir.ui.view">
+        <field name="name">hudson.division.kanban</field>
+        <field name="model">hudson.division</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="description"/>
+                <field name="customer_count"/>
+                <field name="active_cleaning_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <i class="fa fa-building-o fa-3x"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong class="o_kanban_record_title"><field name="name"/></strong>
+                                <div class="o_kanban_record_subtitle">
+                                    <field name="code"/>
+                                </div>
+                                <div class="o_kanban_record_body">
+                                    <field name="description"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_left">
+                                        <span class="badge text-bg-primary" invisible="code != 'pool'">
+                                            <i class="fa fa-users"/> <field name="customer_count"/> Customers
+                                        </span>
+                                        <span class="badge text-bg-success" invisible="code != 'pool'">
+                                            <i class="fa fa-tasks"/> <field name="active_cleaning_count"/> Active
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Division Action -->
+    <record id="action_hudson_division" model="ir.actions.act_window">
+        <field name="name">Divisions</field>
+        <field name="res_model">hudson.division</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+</odoo>

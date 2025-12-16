@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Root Menu -->
+    <menuitem id="menu_hudson_root"
+              name="Hudson Management"
+              sequence="10"
+              web_icon="hudson_management,static/description/icon.png"/>
+
+    <!-- Pool Service Menu -->
+    <menuitem id="menu_pool_service"
+              name="Pool Service"
+              parent="menu_hudson_root"
+              sequence="10"
+              groups="group_hudson_admin"/>
+
+    <menuitem id="menu_pool_customers"
+              name="Customers"
+              parent="menu_pool_service"
+              action="action_pool_customer"
+              sequence="10"/>
+
+    <menuitem id="menu_pool_cleanings"
+              name="Cleanings"
+              parent="menu_pool_service"
+              action="action_pool_cleaning"
+              sequence="20"/>
+
+    <!-- Reports Menu -->
+    <menuitem id="menu_pool_reports"
+              name="Reports"
+              parent="menu_hudson_root"
+              sequence="90"
+              groups="group_hudson_admin"/>
+
+    <menuitem id="menu_pool_financial_report"
+              name="Financial Report"
+              parent="menu_pool_reports"
+              action="action_pool_financial_report"
+              sequence="10"/>
+
+    <menuitem id="menu_pool_cleaning_report"
+              name="Cleaning Analysis"
+              parent="menu_pool_reports"
+              action="action_pool_cleaning_report"
+              sequence="20"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_hudson_config"
+              name="Configuration"
+              parent="menu_hudson_root"
+              sequence="100"
+              groups="base.group_system"/>
+
+    <menuitem id="menu_hudson_divisions"
+              name="Divisions"
+              parent="menu_hudson_config"
+              action="action_hudson_division"
+              sequence="10"/>
+
+</odoo>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Sequences -->
+    <record id="seq_pool_customer" model="ir.sequence">
+        <field name="name">Pool Customer Sequence</field>
+        <field name="code">pool.customer</field>
+        <field name="prefix">CUST-</field>
+        <field name="padding">4</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="seq_pool_cleaning" model="ir.sequence">
+        <field name="name">Pool Cleaning Sequence</field>
+        <field name="code">pool.cleaning</field>
+        <field name="prefix">CLN-</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <!-- Default Division: Pool Service -->
+    <record id="division_pool" model="hudson.division">
+        <field name="name">Pool Service</field>
+        <field name="code">pool</field>
+        <field name="sequence">10</field>
+        <field name="description">Division for pool cleaning and maintenance services</field>
+    </record>
+
+    <!-- Demo Data (Optional - hapus jika tidak perlu) -->
+    <record id="demo_customer_1" model="pool.customer">
+        <field name="name">John Doe</field>
+        <field name="code">CUST-0001</field>
+        <field name="phone">081234567890</field>
+        <field name="email">john.doe@example.com</field>
+        <field name="address">Jl. Merdeka No. 123, Jakarta</field>
+        <field name="pool_length">10</field>
+        <field name="pool_width">5</field>
+        <field name="pool_depth">2</field>
+        <field name="service_type">business</field>
+    </record>
+
+    <record id="demo_customer_2" model="pool.customer">
+        <field name="name">Jane Smith</field>
+        <field name="code">CUST-0002</field>
+        <field name="phone">081298765432</field>
+        <field name="email">jane.smith@example.com</field>
+        <field name="address">Jl. Sudirman No. 456, Jakarta</field>
+        <field name="pool_length">8</field>
+        <field name="pool_width">4</field>
+        <field name="pool_depth">1.8</field>
+        <field name="service_type">exclusive</field>
+    </record>
+
+</odoo>

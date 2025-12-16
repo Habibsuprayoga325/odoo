@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hudson_division_admin,access.hudson.division.admin,model_hudson_division,group_hudson_admin,1,1,1,1
+access_hudson_division_member,access.hudson.division.member,model_hudson_division,group_hudson_member,1,0,0,0
+access_pool_customer_admin,access.pool.customer.admin,model_pool_customer,group_hudson_admin,1,1,1,1
+access_pool_customer_member,access.pool.customer.member,model_pool_customer,group_hudson_member,1,0,0,0
+access_pool_cleaning_admin,access.pool.cleaning.admin,model_pool_cleaning,group_hudson_admin,1,1,1,1
+access_pool_cleaning_member,access.pool.cleaning.member,model_pool_cleaning,group_hudson_member,1,0,0,0
+access_pool_financial_report_admin,access.pool.financial.report.admin,model_pool_financial_report,group_hudson_admin,1,1,1,1
+access_pool_cleaning_report_admin,access.pool.cleaning.report.admin,model_pool_cleaning_report,group_hudson_admin,1,0,0,0
