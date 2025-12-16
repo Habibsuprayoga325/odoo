@@ -1,0 +1,39 @@
+<odoo>
+    <record id="view_pool_customer_tree" model="ir.ui.view">
+        <field name="name">pool.customer.tree</field>
+        <field name="model">pool.customer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="service_type"/>
+                <field name="service_price"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_pool_customer_form" model="ir.ui.view">
+        <field name="name">pool.customer.form</field>
+        <field name="model">pool.customer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="phone"/>
+                        <field name="address"/>
+                        <field name="pool_volume"/>
+                        <field name="service_type"/>
+                        <field name="service_price"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pool_customer" model="ir.actions.act_window">
+        <field name="name">Data Pelanggan</field>
+        <field name="res_model">pool.customer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

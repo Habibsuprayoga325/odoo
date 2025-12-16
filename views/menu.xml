@@ -1,0 +1,23 @@
+<odoo>
+    <menuitem id="menu_aio_root" name="arctic Management" sequence="10"/>
+
+    <menuitem id="menu_aio_dashboard" 
+              name="Dashboard" 
+              parent="menu_aio_root" 
+              action="action_aio_division" 
+              sequence="1"/>
+
+    <menuitem id="menu_pool_service" name="Pool Service" parent="menu_aio_root" sequence="10"/>
+    
+    <menuitem id="menu_pool_customers" 
+              name="Customers" 
+              parent="menu_pool_service" 
+              action="action_pool_customer" 
+              sequence="10"/>
+              
+    <menuitem id="menu_pool_cleaning" 
+              name="Cleaning Schedule" 
+              parent="menu_pool_service" 
+              action="action_pool_cleaning" 
+              sequence="20"/>
+</odoo>

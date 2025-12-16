@@ -1,0 +1,52 @@
+<odoo>
+    <record id="view_pool_cleaning_tree" model="ir.ui.view">
+        <field name="name">pool.cleaning.tree</field>
+        <field name="model">pool.cleaning</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="is_overdue">
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="scheduled_date"/>
+                <field name="state" widget="badge"/>
+                <field name="is_overdue" invisible="1"/>
+            </tree>
+        </field>
+    </record>
+    
+    <record id="view_pool_cleaning_search" model="ir.ui.view">
+        <field name="name">pool.cleaning.search</field>
+        <field name="model">pool.cleaning</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="customer_id"/>
+                <filter string="Terlambat" name="overdue" domain="[('is_overdue', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_pool_cleaning_form" model="ir.ui.view">
+        <field name="name">pool.cleaning.form</field>
+        <field name="model">pool.cleaning</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="customer_id"/>
+                        <field name="scheduled_date"/>
+                        <field name="total_cost"/>
+                        <field name="payment_status"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pool_cleaning" model="ir.actions.act_window">
+        <field name="name">Jadwal Pembersihan</field>
+        <field name="res_model">pool.cleaning</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

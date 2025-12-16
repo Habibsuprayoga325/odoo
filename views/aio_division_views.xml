@@ -1,0 +1,40 @@
+<odoo>
+    <record id="view_aio_division_kanban" model="ir.ui.view">
+        <field name="name">aio.division.kanban</field>
+        <field name="model">aio.division</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="customer_count"/>
+                <field name="active_cleaning_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <i class="fa fa-building-o fa-3x" title="Division"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div class="oe_kanban_bottom_left">
+                                    <span class="badge text-bg-primary" invisible="code != 'pool'">
+                                        <i class="fa fa-users" title="Cust"/> <field name="customer_count"/>
+                                    </span>
+                                    <span class="badge text-bg-success" invisible="code != 'pool'">
+                                        <i class="fa fa-tasks" title="Active"/> <field name="active_cleaning_count"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_aio_division" model="ir.actions.act_window">
+        <field name="name">Divisions</field>
+        <field name="res_model">aio.division</field>
+        <field name="view_mode">kanban,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_aio_division,access_aio_division,model_aio_division,,1,1,1,1
+access_pool_customer,access_pool_customer,model_pool_customer,,1,1,1,1
+access_pool_cleaning,access_pool_cleaning,model_pool_cleaning,,1,1,1,1
+access_pool_financial_report,access_pool_financial_report,model_pool_financial_report,,1,1,1,1
+access_pool_cleaning_report,access_pool_cleaning_report,model_pool_cleaning_report,,1,1,1,1
