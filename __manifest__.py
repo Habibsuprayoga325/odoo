@@ -20,6 +20,7 @@
         'web',
         'portal',
         'website',
+        'mail',
     ],
     'data': [
     # 1. Security (Selalu paling atas)
@@ -36,14 +37,19 @@
     
     # 4. View yang memanggil action di atas (Divisions memanggil customer & cleaning)
     'views/divisions_views.xml',     # Sekarang aman karena action sudah terdaftar [cite: 257]
+    'views/website_templates.xml',
     
     # 5. Menu (Selalu paling bawah agar semua action & view sudah siap)
     'views/menu.xml',                # [cite: 261]
         ],
     'assets': {
         'web.assets_backend': [
-            'hudson_management/static/src/css/dashboard.css',
-            'hudson_management/static/src/js/dashboard.js',
+            'odoo/static/src/css/dashboard.css',
+            'odoo/static/src/js/dashboard.js',
+        ],
+        'web.assets_frontend': [
+            'odoo/static/src/css/dashboard.css',
+            'odoo/static/src/js/dashboard.js',
         ],
     },
     'installable': True,

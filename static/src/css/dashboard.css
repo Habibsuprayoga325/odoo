@@ -1,0 +1,136 @@
+/* Basic styling for Hudson Management website dashboard */
+.hm-hero {
+    background: linear-gradient(120deg, #0f172a, #1e293b);
+    color: #f8fafc;
+    padding: 48px 0;
+}
+.hm-hero--pool {
+    background: linear-gradient(120deg, #0b7285, #1b4965);
+}
+.hm-hero__content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+}
+.hm-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    font-size: 12px;
+    color: #94a3b8;
+    margin-bottom: 8px;
+}
+.hm-subtitle {
+    color: #cbd5e1;
+    margin: 0;
+}
+.hm-hero__badge {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 16px 20px;
+    border-radius: 16px;
+    text-align: right;
+}
+.hm-hero__actions .btn {
+    margin-left: 8px;
+}
+.hm-section {
+    padding: 32px 0;
+}
+.hm-section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.hm-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+.hm-card__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.hm-card__footer {
+    margin-top: auto;
+}
+.hm-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #e2e8f0;
+    color: #0f172a;
+    font-weight: 700;
+    font-size: 12px;
+}
+.hm-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+.hm-stats p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+}
+.hm-stats strong {
+    font-size: 18px;
+}
+.hm-pill {
+    background: #0f172a;
+    color: #f8fafc;
+    padding: 16px;
+    border-radius: 12px;
+}
+.hm-link-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    text-decoration: none;
+    color: #0f172a;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+}
+.hm-link-card__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #e0f2fe;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
+.hm-table th {
+    background: #f8fafc;
+    font-weight: 600;
+}
+.hm-table td, .hm-table th {
+    vertical-align: middle;
+}
+.hm-badge--state, .hm-badge--pay {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: #e2e8f0;
+    font-size: 12px;
+}
+@media (max-width: 768px) {
+    .hm-hero__content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .hm-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
