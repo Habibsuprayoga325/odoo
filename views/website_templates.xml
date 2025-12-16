@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="dashboard_template" name="Hudson Dashboard" inherit_id="website.layout">
+        <xpath expr="//main" position="replace">
+            <main id="wrap" class="o_main">
+                <section class="hm-hero">
+                    <div class="container">
+                        <div class="hm-hero__content">
+                            <div>
+                                <p class="hm-eyebrow">Hudson Management</p>
+                                <h1>Hello, <t t-esc="user.name"/></h1>
+                                <p class="hm-subtitle">
+                                    Role: <t t-esc="user.user_type or 'regular'"/>
+                                </p>
+                            </div>
+                            <div class="hm-hero__badge">
+                                <span>Custom Admin Panel</span>
+                                <strong>Zink & Divisions</strong>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hm-section">
+                    <div class="container">
+                        <div class="hm-section__header">
+                            <h2>Divisions</h2>
+                            <p>Pilih divisi untuk mengelola operasional</p>
+                        </div>
+                        <div class="row g-3">
+                            <t t-foreach="divisions" t-as="division">
+                                <div class="col-12 col-md-4">
+                                    <div class="hm-card">
+                                        <div class="hm-card__head">
+                                            <h3><t t-esc="division.name"/></h3>
+                                            <span class="hm-badge">
+                                                <t t-esc="division.code"/>
+                                            </span>
+                                        </div>
+                                        <p class="text-muted"><t t-esc="division.description"/></p>
+                                        <t t-if="division.code in stats">
+                                            <div class="hm-stats">
+                                                <div>
+                                                    <p>Customers</p>
+                                                    <strong><t t-esc="stats[division.code]['total_customers']"/></strong>
+                                                </div>
+                                                <div>
+                                                    <p>Active</p>
+                                                    <strong><t t-esc="stats[division.code]['active_cleanings']"/></strong>
+                                                </div>
+                                                <div>
+                                                    <p>Unpaid</p>
+                                                    <strong><t t-esc="stats[division.code]['pending_unpaid']"/></strong>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <div class="hm-card__footer">
+                                            <t t-if="division.code == 'pool'">
+                                                <a href="/hudson/pool" class="btn btn-primary">Buka Dashboard Kolam</a>
+                                            </t>
+                                            <t t-else="">
+                                                <span class="text-muted">Belum ada halaman khusus</span>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-if="not divisions">
+                                <div class="col-12">
+                                    <div class="alert alert-warning">Tidak ada divisi yang ditugaskan.</div>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </xpath>
+    </template>
+
+    <template id="pool_dashboard_template" name="Pool Division Dashboard" inherit_id="website.layout">
+        <xpath expr="//main" position="replace">
+            <main id="wrap" class="o_main">
+                <section class="hm-hero hm-hero--pool">
+                    <div class="container">
+                        <div class="hm-hero__content">
+                            <div>
+                                <p class="hm-eyebrow">Hudson Management · Kolam Renang</p>
+                                <h1>Dashboard Admin</h1>
+                                <p class="hm-subtitle">Kelola pelanggan, jadwal pembersihan, dan laporan</p>
+                            </div>
+                            <div class="hm-hero__actions">
+                                <a t-att-href="'/web#action=%s' % action_pool_customer" class="btn btn-light">Data Customer</a>
+                                <a t-att-href="'/web#action=%s' % action_pool_cleaning" class="btn btn-outline-light">Cleanings</a>
+                                <a href="/web" class="btn btn-outline-light">Setting & Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hm-section">
+                    <div class="container">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="hm-pill">
+                                    <p>Total Customer</p>
+                                    <strong><t t-esc="stats['total_customers']"/></strong>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="hm-pill">
+                                    <p>Scheduled / In Progress</p>
+                                    <strong><t t-esc="stats['active_cleanings']"/></strong>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="hm-pill">
+                                    <p>Completed</p>
+                                    <strong><t t-esc="stats['completed_cleanings']"/></strong>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="hm-pill">
+                                    <p>Unpaid / Partial</p>
+                                    <strong><t t-esc="stats['pending_unpaid']"/></strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hm-section">
+                    <div class="container">
+                        <div class="hm-section__header">
+                            <h2>Shortcut</h2>
+                            <p>Akses cepat ke fitur utama</p>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-12 col-md-3">
+                                <a t-att-href="'/web#action=%s' % action_pool_customer" class="hm-link-card">
+                                    <div class="hm-link-card__icon">👤</div>
+                                    <div>
+                                        <h3>Data Customer</h3>
+                                        <p>CRUD, search, dan detail kolam</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <a t-att-href="'/web#action=%s' % action_pool_cleaning" class="hm-link-card">
+                                    <div class="hm-link-card__icon">🧽</div>
+                                    <div>
+                                        <h3>Cleanings</h3>
+                                        <p>Jadwal, status, pembayaran</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <a t-att-href="'/web#action=%s' % action_pool_financial_report" class="hm-link-card">
+                                    <div class="hm-link-card__icon">💰</div>
+                                    <div>
+                                        <h3>Laporan Keuangan</h3>
+                                        <p>Masuk, keluar, saldo</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <a t-att-href="'/web#action=%s' % action_pool_cleaning_report" class="hm-link-card">
+                                    <div class="hm-link-card__icon">📊</div>
+                                    <div>
+                                        <h3>Laporan Pembersihan</h3>
+                                        <p>Status kolam & analisis</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hm-section">
+                    <div class="container">
+                        <div class="hm-section__header">
+                            <h2>Data Customer Terbaru</h2>
+                            <a t-att-href="'/web#action=%s' % action_pool_customer" class="btn btn-link">Lihat semua</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table hm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Kode</th>
+                                        <th>Nama</th>
+                                        <th>Telepon</th>
+                                        <th>Jenis</th>
+                                        <th>Volume (m³)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="customers" t-as="cust">
+                                        <tr>
+                                            <td><t t-esc="cust.code"/></td>
+                                            <td><t t-esc="cust.name"/></td>
+                                            <td><t t-esc="cust.phone or '-'"/></td>
+                                            <td><t t-esc="cust.service_type"/></td>
+                                            <td><t t-esc="cust.pool_volume"/></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="not customers">
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">Belum ada data customer.</td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hm-section">
+                    <div class="container">
+                        <div class="hm-section__header">
+                            <h2>Cleaning Terkini</h2>
+                            <a t-att-href="'/web#action=%s' % action_pool_cleaning" class="btn btn-link">Kelola</a>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table hm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Referensi</th>
+                                        <th>Customer</th>
+                                        <th>Jadwal</th>
+                                        <th>Status</th>
+                                        <th>Pembayaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="cleanings" t-as="cln">
+                                        <tr>
+                                            <td><t t-esc="cln.name"/></td>
+                                            <td><t t-esc="cln.customer_id.name"/></td>
+                                            <td><t t-esc="cln.scheduled_date"/></td>
+                                            <td><span class="hm-badge hm-badge--state"><t t-esc="cln.state"/></span></td>
+                                            <td><span class="hm-badge hm-badge--pay"><t t-esc="cln.payment_status"/></span></td>
+                                        </tr>
+                                    </t>
+                                    <t t-if="not cleanings">
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted">Belum ada jadwal pembersihan.</td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </xpath>
+    </template>
+</odoo>

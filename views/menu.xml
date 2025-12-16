@@ -3,8 +3,7 @@
     <!-- Root Menu -->
     <menuitem id="menu_hudson_root"
               name="Hudson Management"
-              sequence="10"
-              web_icon="hudson_management,static/description/icon.png"/>
+              sequence="10"/>
 
     <!-- Pool Service Menu -->
     <menuitem id="menu_pool_service"

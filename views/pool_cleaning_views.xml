@@ -196,9 +196,6 @@
                 <separator/>
                 <filter string="Today" name="filter_today" 
                         domain="[('scheduled_date','=',context_today().strftime('%Y-%m-%d'))]"/>
-                <filter string="This Week" name="filter_week" 
-                        domain="[('scheduled_date','&gt;=',context_today().strftime('%Y-%m-%d')),
-                                ('scheduled_date','&lt;=',(context_today()+relativedelta(weeks=1)).strftime('%Y-%m-%d'))]"/>
                 <group expand="0" string="Group By">
                     <filter string="Customer" name="group_customer" context="{'group_by':'customer_id'}"/>
                     <filter string="Status" name="group_state" context="{'group_by':'state'}"/>
