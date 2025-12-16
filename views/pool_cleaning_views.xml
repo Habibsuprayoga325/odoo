@@ -36,7 +36,11 @@
                     <group>
                         <field name="customer_id"/>
                         <field name="scheduled_date"/>
+                        <field name="cleaning_type"/>
+                        <field name="duration"/>
+                        <field name="additional_cost"/>
                         <field name="total_cost"/>
+                        <field name="paid_amount"/>
                         <field name="payment_status"/>
                     </group>
                 </sheet>

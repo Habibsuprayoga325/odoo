@@ -8,8 +8,7 @@
                 <field name="name"/>
                 <field name="date_from"/>
                 <field name="date_to"/>
-                <field name="cleaning_count"/>
-                <field name="total_income" sum="Total Income"/>
+                <field name="total_income" sum="Total"/>
                 <field name="balance" sum="Balance"/>
             </tree>
         </field>
@@ -19,49 +18,21 @@
         <field name="name">pool.financial.report.form</field>
         <field name="model">pool.financial.report</field>
         <field name="arch" type="xml">
-            <form string="Financial Report">
-                <header>
-                    <button name="action_view_cleanings" type="object" string="View Cleanings" class="oe_highlight" invisible="cleaning_count == 0"/>
-                </header>
+            <form>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_view_cleanings" type="object" class="oe_stat_button" icon="fa-list">
-                            <field name="cleaning_count" widget="statinfo" string="Cleanings"/>
-                        </button>
-                    </div>
                     <group>
                         <group>
                             <field name="name"/>
                             <field name="date_from"/>
                             <field name="date_to"/>
                         </group>
-                    </group>
-                    <group string="Income Summary">
                         <group>
                             <field name="total_income" widget="monetary"/>
                             <field name="paid_income" widget="monetary"/>
-                            <field name="unpaid_income" widget="monetary"/>
-                        </group>
-                        <group>
-                            <field name="total_expenses" widget="monetary"/>
-                            <field name="balance" widget="monetary" class="oe_subtotal_footer_separator"/>
+                            <field name="balance" widget="monetary"/>
                             <field name="currency_id" invisible="1"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Details">
-                            <field name="cleaning_ids" readonly="1">
-                                <tree>
-                                    <field name="name"/>
-                                    <field name="customer_id"/>
-                                    <field name="scheduled_date"/>
-                                    <field name="state"/>
-                                    <field name="payment_status"/>
-                                    <field name="total_cost" sum="Total"/>
-                                </tree>
-                            </field>
-                        </page>
-                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -73,20 +44,12 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-
     <record id="view_pool_cleaning_report_search" model="ir.ui.view">
         <field name="name">pool.cleaning.report.search</field>
         <field name="model">pool.cleaning.report</field>
         <field name="arch" type="xml">
-            <search string="Search Analysis">
-                <field name="customer_id"/>
-                <field name="service_type"/>
-                <filter string="This Month" name="this_month" domain="[('scheduled_date', '&gt;=', context_today().strftime('%Y-%m-01'))]"/>
-                <group expand="1" string="Group By">
-                    <filter string="Customer" name="group_customer" context="{'group_by':'customer_id'}"/>
-                    <filter string="Date" name="group_date" context="{'group_by':'scheduled_date:month'}"/>
-                </group>
-            </search>
+            <search string="Analysis Search">
+                <field name="name"/> </search>
         </field>
     </record>
 
@@ -94,11 +57,10 @@
         <field name="name">pool.cleaning.report.pivot</field>
         <field name="model">pool.cleaning.report</field>
         <field name="arch" type="xml">
-            <pivot string="Cleaning Analysis">
+            <pivot string="Analysis">
                 <field name="scheduled_date" type="row" interval="month"/>
-                <field name="service_type" type="col"/>
+                <field name="cleaning_type" type="col"/>
                 <field name="total_cost" type="measure"/>
-                <field name="duration" type="measure"/>
             </pivot>
         </field>
     </record>
@@ -107,7 +69,7 @@
         <field name="name">pool.cleaning.report.graph</field>
         <field name="model">pool.cleaning.report</field>
         <field name="arch" type="xml">
-            <graph string="Cleaning Analysis" type="bar">
+            <graph string="Analysis" type="bar">
                 <field name="scheduled_date" interval="month"/>
                 <field name="total_cost" type="measure"/>
             </graph>
@@ -121,5 +83,4 @@
         <field name="search_view_id" ref="view_pool_cleaning_report_search"/>
         <field name="context">{}</field>
     </record>
-
 </odoo>

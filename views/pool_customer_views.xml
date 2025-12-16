@@ -1,9 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="view_pool_customer_search" model="ir.ui.view">
+        <field name="name">pool.customer.search</field>
+        <field name="model">pool.customer</field>
+        <field name="arch" type="xml">
+            <search string="Cari Pelanggan">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="1" string="Group By">
+                    <filter string="Jenis Layanan" name="grp_service" context="{'group_by':'service_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="view_pool_customer_tree" model="ir.ui.view">
         <field name="name">pool.customer.tree</field>
         <field name="model">pool.customer</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree string="Daftar Pelanggan">
+                <field name="code" optional="show"/>
                 <field name="name"/>
                 <field name="phone"/>
                 <field name="service_type"/>
@@ -16,17 +37,34 @@
         <field name="name">pool.customer.form</field>
         <field name="model">pool.customer</field>
         <field name="arch" type="xml">
-            <form>
+            <form string="Form Pelanggan">
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_cleanings" type="object" class="oe_stat_button" icon="fa-history">
+                            <field name="cleaning_count" widget="statinfo" string="Riwayat"/>
+                        </button>
+                    </div>
+
                     <group>
-                        <field name="name"/>
-                        <field name="phone"/>
-                        <field name="address"/>
-                        <field name="pool_volume"/>
-                        <field name="service_type"/>
-                        <field name="service_price"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                        <group>
+                            <field name="address"/>
+                            <field name="pool_volume"/>
+                            <field name="service_type"/>
+                            <field name="service_price"/>
+                            <field name="active" invisible="1"/>
+                        </group>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
             </form>
         </field>
     </record>
@@ -35,5 +73,12 @@
         <field name="name">Data Pelanggan</field>
         <field name="res_model">pool.customer</field>
         <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_pool_customer_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Belum ada data pelanggan. Klik tombol Baru untuk membuat.
+            </p>
+        </field>
     </record>
+
 </odoo>

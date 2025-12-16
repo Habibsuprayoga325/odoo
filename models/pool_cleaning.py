@@ -22,6 +22,15 @@ class PoolCleaning(models.Model):
         ('cancelled', 'Dibatalkan'),
     ], string='Status', default='draft', tracking=True)
 
+    cleaning_type = fields.Selection([
+        ('regular', 'Regular Cleaning'),
+        ('deep', 'Deep Cleaning'),
+        ('maintenance', 'Maintenance'),
+        ('emergency', 'Emergency'),
+    ], string='Jenis Pembersihan', default='regular')
+
+    duration = fields.Float(string='Durasi (Jam)', default=0.0)
+
     # Keuangan
     service_price = fields.Monetary(related='customer_id.service_price', string='Harga Jasa', store=True)
     additional_cost = fields.Monetary(string='Biaya Tambahan', default=0.0)
@@ -31,8 +40,11 @@ class PoolCleaning(models.Model):
     # Status Pembayaran
     payment_status = fields.Selection([
         ('unpaid', 'Belum Lunas'),
+        ('partial', 'Sebagian'),
         ('paid', 'Lunas'),
     ], string='Pembayaran', default='unpaid')
+
+    paid_amount = fields.Monetary(string='Jumlah Dibayar', default=0.0)
 
     # Field Penting untuk Filter Search
     is_overdue = fields.Boolean(string='Terlambat', compute='_compute_is_overdue', store=True)
