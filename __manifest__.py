@@ -44,12 +44,12 @@
         ],
     'assets': {
         'web.assets_backend': [
-            'odoo/static/src/css/dashboard.css',
-            'odoo/static/src/js/dashboard.js',
+            'hudson_management/static/src/css/dashboard.css',
+            'hudson_management/static/src/js/dashboard.js',
         ],
         'web.assets_frontend': [
-            'odoo/static/src/css/dashboard.css',
-            'odoo/static/src/js/dashboard.js',
+            'hudson_management/static/src/css/dashboard.css',
+            'hudson_management/static/src/js/dashboard.js',
         ],
     },
     'installable': True,

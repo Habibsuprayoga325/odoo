@@ -91,7 +91,7 @@
                             <div class="hm-hero__actions">
                                 <a t-att-href="'/web#action=%s' % action_pool_customer" class="btn btn-light">Data Customer</a>
                                 <a t-att-href="'/web#action=%s' % action_pool_cleaning" class="btn btn-outline-light">Cleanings</a>
-                                <a href="/web" class="btn btn-outline-light">Setting & Logout</a>
+                                <a href="/web" class="btn btn-outline-light">Setting &amp; Logout</a>
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                                     <div class="hm-link-card__icon">📊</div>
                                     <div>
                                         <h3>Laporan Pembersihan</h3>
-                                        <p>Status kolam & analisis</p>
+                                        <p>Status kolam &amp; analisis</p>
                                     </div>
                                 </a>
                             </div>

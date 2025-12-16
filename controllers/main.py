@@ -38,7 +38,7 @@ class HudsonController(http.Controller):
             'stats': stats,
         }
         
-        return request.render('odoo.dashboard_template', values)
+        return request.render('hudson_management.dashboard_template', values)
     
     @http.route('/hudson/api/dashboard_data', type='json', auth='user')
     def get_dashboard_data(self, **kwargs):
@@ -50,7 +50,7 @@ class HudsonController(http.Controller):
     def pool_dashboard(self, **kwargs):
         """Halaman dashboard divisi kolam renang untuk admin"""
         user = request.env.user
-        if not user.has_group('odoo.group_hudson_admin'):
+        if not user.has_group('hudson_management.group_hudson_admin'):
             return request.not_found()
 
         PoolCustomer = request.env['pool.customer'].sudo()
@@ -71,9 +71,9 @@ class HudsonController(http.Controller):
             'stats': stats,
             'customers': customers,
             'cleanings': cleanings,
-            'action_pool_customer': request.env.ref('odoo.action_pool_customer').id,
-            'action_pool_cleaning': request.env.ref('odoo.action_pool_cleaning').id,
-            'action_pool_financial_report': request.env.ref('odoo.action_pool_financial_report').id,
-            'action_pool_cleaning_report': request.env.ref('odoo.action_pool_cleaning_report').id,
+            'action_pool_customer': request.env.ref('hudson_management.action_pool_customer').id,
+            'action_pool_cleaning': request.env.ref('hudson_management.action_pool_cleaning').id,
+            'action_pool_financial_report': request.env.ref('hudson_management.action_pool_financial_report').id,
+            'action_pool_cleaning_report': request.env.ref('hudson_management.action_pool_cleaning_report').id,
         }
-        return request.render('odoo.pool_dashboard_template', values)
+        return request.render('hudson_management.pool_dashboard_template', values)
